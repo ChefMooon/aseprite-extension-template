@@ -33,8 +33,8 @@ with zipfile.ZipFile(zip_path, 'w') as zipf:
     for filename in files_to_zip:
         file_path = os.path.join(directory, filename)
         if os.path.exists(file_path):
-            # Remove 'src/' prefix if present so all files are at the root of the archive
-            arcname = filename.split("src/", 1)[-1] if filename.startswith("src/") else filename
+            # Remove 'src/' prefix from the archive name so files are at root level in the zip
+            arcname = filename.replace("src/", "").replace("src\\", "")
             zipf.write(file_path, arcname=arcname)
 
 # Print the path to the created zip archive

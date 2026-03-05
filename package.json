@@ -1,0 +1,21 @@
+{
+  "name": "template",
+  "displayName": "Template",
+  "description": "A template plugin for Aseprite.",
+  "version": "0.1",
+  "author": { "name": "Template Author",
+              "email": "template.author@example.com",
+              "url": "https://template-author.github.io" },
+  "contributors": [ ],
+  "publisher": "template-author",
+  "license": "MIT",
+  "categories": [ "Keys", "Scripts" ],
+  "contributes": {
+    "keys": [
+      { "id": "default-keys", "path": "./default-keys.aseprite-keys" }
+    ],
+    "scripts": [
+        { "path": "./init.lua" }
+    ]
+  }
+}

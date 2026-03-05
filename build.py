@@ -24,7 +24,7 @@ files_to_zip = sorted(glob.glob("src/*")) + [
 ]
 
 # Construct the zip filename using the name and version
-zip_filename = f"{name}_v{version}.aseprite-extension"
+zip_filename = f"{name}-v{version}.aseprite-extension"
 zip_path = os.path.join(build_folder, zip_filename)
 
 

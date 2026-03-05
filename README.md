@@ -1,6 +1,6 @@
 # Aseprite Extension Template
 
-A template project for creating Aseprite extensions with a streamlined build workflow. This template includes everything you need to get started developing custom Aseprite extensions with Lua scripts and keyboard shortcuts.
+A template project for creating Aseprite extensions with a streamlined build workflow.
 
 ## Project Structure
 

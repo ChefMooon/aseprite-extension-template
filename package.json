@@ -2,7 +2,7 @@
   "name": "template",
   "displayName": "Template",
   "description": "A template plugin for Aseprite.",
-  "version": "0.1",
+  "version": "1.0.0",
   "author": { "name": "Template Author",
               "email": "template.author@example.com",
               "url": "https://template-author.github.io" },

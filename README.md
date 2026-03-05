@@ -1,6 +1,15 @@
 # Aseprite Extension Template
 
-A template project for creating Aseprite extensions with a streamlined build workflow.
+> A template project for creating [Aseprite](https://www.aseprite.org/) extensions with a streamlined build workflow.
+
+## Features
+
+- **Zero-config bundling** — all files in `src/` are included automatically
+- **VS Code integration** — build with `Ctrl+Shift+B`
+- **Auto-versioned output** — output file is named using your `package.json` metadata
+- **Keyboard shortcut support** — optional `default-keys.aseprite-keys` file included
+
+---
 
 ## Project Structure
 
@@ -13,73 +22,88 @@ A template project for creating Aseprite extensions with a streamlined build wor
 ├── build.py                       # Build script to bundle the extension
 ├── package.json                   # Extension metadata and configuration
 ├── default-keys.aseprite-keys     # Keyboard shortcuts (optional)
-├── LICENSE                        # License file
-└── README.md                      # This file
+├── LICENSE
+└── README.md
 ```
 
 ## Getting Started
 
 ### Prerequisites
-- [Aseprite](https://www.aseprite.org/) installed
-- Python 3.6+ (for the build script)
 
-### Development Workflow
+- [Aseprite v1.2-beta10+](https://www.aseprite.org/)
+- [Python 3.6+](https://www.python.org/downloads/)
 
-1. **Edit your extension files:**
-   - Add Lua code to `src/init.lua` or create additional Lua files in the `src/` directory
-   - Define keyboard shortcuts in `default-keys.aseprite-keys` if needed
-   - Update metadata in `package.json` (name, version, description, author, etc.)
+### Quickstart
 
-2. **Build the extension:**
-   - **Using VS Code:** Run the `Build` task (Ctrl+Shift+B or from the Task menu)
-   - **Using terminal:** `python build.py`
-   - This creates a `.aseprite-extension` file in the `build/` directory
+**1. Write your extension**
 
-3. **Install in Aseprite:**
-   - Open Aseprite
-   - Go to **File → Scripts → Manage Extensions**
-   - Click **Add Extension** and select your `.aseprite-extension` file from the `build/` directory
-   - Restart Aseprite to apply changes
+Add your Lua code to `src/init.lua`. Create additional `.lua` files in `src/` as needed — they'll be picked up automatically.
 
-## Configuration
+**2. Update your metadata**
 
-### package.json
-Update the metadata in `package.json` to match your extension:
-- `name`: Unique identifier for your extension
-- `displayName`: Human-readable name
-- `version`: Version number (follows semantic versioning)
-- `description`: Brief description of what your extension does
-- `author`: Your name and contact information
-- `categories`: Classification (e.g., "Keys", "Scripts", "Tools")
+Edit `package.json` with your extension's details:
 
-### default-keys.aseprite-keys
-Define custom keyboard shortcuts for your extension. This file uses Aseprite's key binding syntax.
+| Field | Description |
+|---|---|
+| `name` | Unique identifier (no spaces) |
+| `displayName` | Human-readable name shown in Aseprite |
+| `version` | Semantic version (e.g. `1.0.0`) |
+| `description` | Short summary of what your extension does |
+| `author` | Your name and contact info |
 
-## Build Process
+**3. Build the extension**
 
-The `build.py` script automates extension bundling with the following features:
-1. Reads the extension **name** and **version** from `package.json`
-2. Automatically discovers and includes all files in the `src/` directory (no manual file list needed)
-3. Includes `package.json` and `default-keys.aseprite-keys`
-4. Creates a `build/` directory if needed
-5. Bundles everything into a `.aseprite-extension` archive (ZIP format)
-6. Names the output file using metadata from `package.json`: `{name}_v{version}.aseprite-extension`
+```bash
+python build.py
+```
 
-### Adding Files to Your Extension
+Or in VS Code: `Ctrl+Shift+B` (or **Terminal → Run Build Task**)
 
-All files in the `src/` direction will be automatically included when building.
+This generates a file like `build/my-extension-v1.0.0.aseprite-extension`.
 
-## Useful Resources
+**4. Install in Aseprite**
 
-### Official Aseprite Documentation
-- [Extensions Documentation](https://aseprite.org/docs/extensions/) - How to create and distribute extensions
-- [Aseprite Scripting Guide](https://aseprite.org/docs/scripting/) - Official Lua scripting documentation
-- [Aseprite API Reference](https://aseprite.org/api/) - Complete API documentation for scripts
-- [Extensions: Keys](https://www.aseprite.org/docs/extensions/keys) - Keyboard shortcut documentation
+1. Open Aseprite
+2. Go to **File → Scripts → Manage Extensions**
+3. Click **Add Extension** and select the `.aseprite-extension` file from `build/`
+4. Click **Apply** then **Okay**
+
+---
+
+## How the Build Script Works
+
+`build.py` does the following in order:
+
+1. Reads `name` and `version` from `package.json`
+2. Recursively collects all files from `src/`
+3. Includes `package.json` and `default-keys.aseprite-keys` (if present)
+4. Creates the `build/` directory if it doesn't exist
+5. Bundles everything into a ZIP archive with the `.aseprite-extension` extension
+6. Names the output: `{name}-v{version}.aseprite-extension`
+
+> **Tip:** You never need to maintain a manual file list. Just add files to `src/` and rebuild.
+
+---
+
+## Keyboard Shortcuts
+
+If your extension uses custom keybindings, define them in `default-keys.aseprite-keys` using [Aseprite's key binding syntax](https://www.aseprite.org/docs/extensions/keys).
+
+---
+
+## Resources
+
+### Official Aseprite Docs
+- [Extension Development Guide](https://aseprite.org/docs/extensions/) — how extensions work
+- [Scripting Guide](https://aseprite.org/docs/scripting/) — Lua scripting in Aseprite
+- [API Reference](https://aseprite.org/api/) — full Aseprite Lua API
+- [Keys Extension Docs](https://www.aseprite.org/docs/extensions/keys) — keyboard shortcut format
 
 ### Example Extensions
-- [Slice Utility](https://github.com/ChefMooon/slice-utility)
+- [Slice Utility](https://github.com/ChefMooon/slice-utility) — a real-world example to learn from
+
+---
 
 ## License
 
-This template is provided under the MIT License. See the [LICENSE](LICENSE) file for details.
+MIT — see [LICENSE](LICENSE) for details.

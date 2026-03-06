@@ -91,6 +91,41 @@ If your extension uses custom keybindings, define them in `default-keys.aseprite
 
 ---
 
+## Automated Releases with GitHub Actions
+
+This template includes a GitHub Actions workflow (`.github/build.yml`) that automatically builds and publishes releases to GitHub when you push to the main branch.
+
+### How It Works
+
+The workflow triggers automatically when you push a commit with `[release]` in the commit message:
+
+```bash
+git commit -m "Added new feature [release]"
+git push origin main
+```
+
+When triggered, the workflow:
+
+1. Checks out your repository
+2. Sets up Python
+3. Extracts your extension's `name` and `version` from `package.json`
+4. Runs `python build.py` to build the extension
+5. Uploads the `.aseprite-extension` file as a build artifact
+6. Creates a GitHub release with the built extension attached
+7. Auto-generates release notes from your commit history
+
+### Setup
+
+The workflow is already configured and ready to use. Just make sure:
+
+1. Your repository is on GitHub
+2. The `.github/workflows/build.yml` file is present
+3. Your `package.json` has valid `name` and `version` fields
+
+No additional configuration needed — pushing `[release]` to main will trigger the build and release automatically.
+
+---
+
 ## Resources
 
 ### Official Aseprite Docs

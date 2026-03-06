@@ -1,0 +1,49 @@
+name: Build Extension
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    if: contains(github.event.head_commit.message, '[release]')
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install --upgrade pip
+
+      - name: Extract info from package.json
+        id: pkg
+        shell: bash
+        run: |
+          NAME=$(cat package.json | python -c "import sys,json; print(json.load(sys.stdin)['name'])")
+          VERSION="v$(cat package.json | python -c "import sys,json; print(json.load(sys.stdin)['version'])")"
+          echo "name=$NAME" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Run build script
+        run: python build.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.pkg.outputs.name }}
+          path: build/${{ steps.pkg.outputs.name }}-${{ steps.pkg.outputs.version }}.aseprite-extension
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/${{ steps.pkg.outputs.name }}-${{ steps.pkg.outputs.version }}.aseprite-extension
+          generate_release_notes: true
+          tag_name: ${{ steps.pkg.outputs.version }}
+          name: ${{ steps.pkg.outputs.version }}
